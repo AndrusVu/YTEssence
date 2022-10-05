@@ -1,13 +1,16 @@
 # YTEssence
 
+<a href="https://ods.ai/tracks/ml-system-design-22"><img src="figures/title.png" alt="ODS ML System Design" width="1200"/></a>
+
+
 YTEssence is a project to create text resume from speech video/audio stream input
 
 **Contributors**
 
 
-Project Roadmap:
+## Project Roadmap:
 
-<WIP>
+<img src="figures/roadmap.png" alt="Roadmap" width="800"/>
 
 
 ### Links
