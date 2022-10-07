@@ -5,17 +5,15 @@
 
 YTEssence is a project to create text resume from speech video/audio stream input
 
-**Contributors**
+
+## Data flow in project:
+
+<img src="figures/data-flow.png" alt="Data flow" width="800"/>
 
 
-## Project Roadmap:
+### Useful links
 
-<img src="figures/roadmap.png" alt="Roadmap" width="800"/>
-
-
-### Links
-
-*Load Video Stream as object*
+*Load Video Stream as an object*
 
 [pafi](https://pypi.org/project/pafy/)
 
@@ -64,3 +62,8 @@ YTEssence is a project to create text resume from speech video/audio stream inpu
 [Image to text sota example Clip Interrogator](https://github.com/pharmapsychotic/clip-interrogator)
 
 [habr Text Summarization approach](https://habr.com/ru/post/514540/)
+
+
+**Contributors**
+
+[![](https://contrib.rocks/image?repo=AndrusVu/YTEssence)](https://github.com/AndrusVu/YTEssence/contributors)
