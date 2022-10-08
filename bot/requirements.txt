@@ -1,0 +1,5 @@
+# configs
+python-dotenv==0.21.0
+
+# bot
+python-telegram-bot==13.14
