@@ -14,6 +14,9 @@ config = dotenv_values("local.env")  # take environment variables from local.env
 TOKEN: str = config.get("TOKEN", "some_my_token")
 PROXY_URL: str = config.get("PORT", None)
 
+DESCRIPTION = """/help - Show help
+/start - Start working"""
+
 
 def log_errors(f):
     def inner(*args, **kwargs):
@@ -25,6 +28,11 @@ def log_errors(f):
             raise e
 
     return inner
+
+
+@log_errors
+def show_help(update: Update, context: CallbackContext):
+    update.message.reply_text(text=f"Supported commands:\n{DESCRIPTION}")
 
 
 @log_errors
@@ -49,6 +57,7 @@ if __name__ == "__main__":
 
     # Add handlers for Telegram messages
     updater.dispatcher.add_handler(CommandHandler("start", start))
+    updater.dispatcher.add_handler(CommandHandler("help", show_help))
 
     # 3 -- Run processing loop of input messages
     updater.start_polling()
