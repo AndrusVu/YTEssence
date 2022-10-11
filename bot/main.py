@@ -15,7 +15,8 @@ TOKEN: str = config.get("TOKEN", "some_my_token")
 PROXY_URL: str = config.get("PORT", None)
 
 DESCRIPTION = """/help - Show help
-/start - Start working"""
+/start - Start working
+/description {LINK} - Get description of sent link"""
 
 
 def log_errors(f):
@@ -33,6 +34,22 @@ def log_errors(f):
 @log_errors
 def show_help(update: Update, context: CallbackContext):
     update.message.reply_text(text=f"Supported commands:\n{DESCRIPTION}")
+
+
+@log_errors
+def process_description(update: Update, context: CallbackContext):
+    chat_id = update.message.chat_id
+    try:
+        url = context.args.pop()
+    except IndexError:
+        update.message.reply_text(text="Need add {LINK} to the video after command /description")
+        return
+
+    sender = {"external_id": chat_id, "defaults": {"name": update.message.from_user.username}}
+    _logger.debug(f"{sender=}, {url=}")
+
+    reply_text = f"Your ID = {chat_id}\n{url} will be processed soon."
+    update.message.reply_text(text=reply_text, disable_web_page_preview=True)  # TODO rewrite with link processing
 
 
 @log_errors
@@ -58,6 +75,7 @@ if __name__ == "__main__":
     # Add handlers for Telegram messages
     updater.dispatcher.add_handler(CommandHandler("start", start))
     updater.dispatcher.add_handler(CommandHandler("help", show_help))
+    updater.dispatcher.add_handler(CommandHandler("description", process_description, pass_args=True))
 
     # 3 -- Run processing loop of input messages
     updater.start_polling()
