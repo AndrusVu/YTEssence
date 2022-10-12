@@ -6,6 +6,8 @@ from telegram.ext import CallbackContext, CommandHandler, Updater
 from telegram.parsemode import ParseMode
 from telegram.utils.request import Request
 
+from utils import url_validator
+
 
 _logger = logging.getLogger(__name__)
 load_dotenv()
@@ -42,7 +44,10 @@ def process_description(update: Update, context: CallbackContext):
     try:
         url = context.args.pop()
     except IndexError:
-        update.message.reply_text(text="Need add {LINK} to the video after command /description")
+        update.message.reply_text(text="Need {LINK} to the video")
+        return
+    if not url_validator(url):
+        update.message.reply_text(text="You input link to the video isn't valid")
         return
 
     sender = {"external_id": chat_id, "defaults": {"name": update.message.from_user.username}}
