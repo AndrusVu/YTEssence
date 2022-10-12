@@ -7,7 +7,7 @@ from telegram.parsemode import ParseMode
 from telegram.utils.request import Request
 
 from utils import url_validator
-
+from youtube import download_video
 
 _logger = logging.getLogger(__name__)
 load_dotenv()
@@ -54,7 +54,8 @@ def process_description(update: Update, context: CallbackContext):
     _logger.debug(f"{sender=}, {url=}")
 
     reply_text = f"Your ID = {chat_id}\n{url} will be processed soon."
-    update.message.reply_text(text=reply_text, disable_web_page_preview=True)  # TODO rewrite with link processing
+    update.message.reply_text(text=reply_text, disable_web_page_preview=True)
+    download_video(url, "data")  # TODO rewrite with link processing
 
 
 @log_errors
