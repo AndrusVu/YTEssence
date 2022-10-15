@@ -8,8 +8,7 @@ from telegram.parsemode import ParseMode
 from telegram.utils.request import Request
 
 from utils import get_hash, url_validator
-from youtube import download_video
-
+from video.youtube import download_video_and_subtitles
 
 _logger = logging.getLogger(__name__)
 load_dotenv()
@@ -59,7 +58,7 @@ def process_description(update: Update, context: CallbackContext):
     update.message.reply_text(text=reply_text, disable_web_page_preview=True)
 
     path = os.path.join("data", get_hash(url))
-    download_video(url, path)
+    download_video_and_subtitles(url, path)
 
 
 @log_errors
