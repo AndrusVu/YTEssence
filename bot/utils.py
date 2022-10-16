@@ -9,5 +9,6 @@ def url_validator(url: str) -> bool:
     except AttributeError:
         return False
 
+
 def get_hash(value: str) -> str:
     return hashlib.md5(value.encode("utf-8")).hexdigest()

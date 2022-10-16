@@ -7,6 +7,7 @@ from telegram.ext import CallbackContext, CommandHandler, Updater
 from telegram.parsemode import ParseMode
 from telegram.utils.request import Request
 
+from audio import get_wav_audio
 from utils import get_hash, url_validator
 from video.youtube import download_video_and_subtitles
 
@@ -58,7 +59,9 @@ def process_description(update: Update, context: CallbackContext):
     update.message.reply_text(text=reply_text, disable_web_page_preview=True)
 
     path = os.path.join("data", get_hash(url))
-    download_video_and_subtitles(url, path)
+    video_path = download_video_and_subtitles(url, path)
+    file_name = os.path.basename(video_path)
+    audio_path = get_wav_audio(video_path)
 
 
 @log_errors
