@@ -1,6 +1,6 @@
 Clip_prefix_caption tests
 
-### (Original source)[https://github.com/rmokady/CLIP_prefix_caption]
+### [Original source](https://github.com/rmokady/CLIP_prefix_caption)
 
 ## Training prerequisites
 
