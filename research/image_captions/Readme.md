@@ -4,7 +4,7 @@
 
 ## Training prerequisites
 
-Clone, create environment and install dependencies:  
+Create environment and install dependencies:  
 ```
 conda env create -f environment.yml
 conda activate clip_prefix_caption
