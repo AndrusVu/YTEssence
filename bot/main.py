@@ -9,6 +9,7 @@ from telegram.utils.request import Request
 
 from audio import get_wav_audio
 from utils import get_hash, url_validator
+from video.processing import extract_video_frames
 from video.youtube import download_video_and_subtitles
 
 _logger = logging.getLogger(__name__)
@@ -60,8 +61,9 @@ def process_description(update: Update, context: CallbackContext):
 
     path = os.path.join("data", get_hash(url))
     video_path = download_video_and_subtitles(url, path)
-    file_name = os.path.basename(video_path)
+    video_filename = os.path.basename(video_path)
     audio_path = get_wav_audio(video_path)
+    extract_video_frames(video_path, os.path.join(path, "frames"))
 
 
 @log_errors
