@@ -79,7 +79,7 @@ def start(update: Update, context: CallbackContext):
 
 if __name__ == "__main__":
     # 1 -- connections
-    request = Request(connect_timeout=0.5, read_timeout=1.0)
+    request = Request(con_pool_size=10, connect_timeout=1.0, read_timeout=1.0)
     bot = Bot(request=request, token=TOKEN, base_url=PROXY_URL)
     _logger.info(bot.get_me())
 
