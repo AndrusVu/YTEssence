@@ -9,7 +9,7 @@ from telegram.utils.request import Request
 
 from audio import get_wav_audio
 from utils import get_hash, url_validator
-from video.processing import extract_video_frames
+from video.processing import extract_video_frames, frames_to_captions, get_captions
 from video.youtube import download_video_and_subtitles
 
 _logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ def show_help(update: Update, context: CallbackContext):
 
 
 @log_errors
-def process_description(update: Update, context: CallbackContext):
+def get_description(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
     try:
         url = context.args.pop()
@@ -64,6 +64,9 @@ def process_description(update: Update, context: CallbackContext):
     video_filename = os.path.basename(video_path)
     audio_path = get_wav_audio(video_path)
     extract_video_frames(video_path, os.path.join(path, "frames"))
+    frames_to_captions(os.path.join(path, "frames"), output_file_path=os.path.join(path, "concat_image_captions.srt"))
+    captions = get_captions(os.path.join(path, "concat_image_captions.srt"))
+    update.message.reply_text(text=captions, disable_web_page_preview=True)
 
 
 @log_errors
@@ -89,7 +92,7 @@ if __name__ == "__main__":
     # Add handlers for Telegram messages
     updater.dispatcher.add_handler(CommandHandler("start", start))
     updater.dispatcher.add_handler(CommandHandler("help", show_help))
-    updater.dispatcher.add_handler(CommandHandler("description", process_description, pass_args=True))
+    updater.dispatcher.add_handler(CommandHandler("description", get_description, pass_args=True))
 
     # 3 -- Run processing loop of input messages
     updater.start_polling()
