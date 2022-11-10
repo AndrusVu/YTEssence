@@ -35,18 +35,18 @@ def extract_video_frames(video_path: str, output_path: str):
 
 def process_image(file_path: str) -> list[str]:
     """Convert images to Small text description"""
-    # preprocessing
+    # 1. preprocess image
     raw_image = Image.open(file_path).convert("RGB")
-    image = vis_processors["eval"](raw_image).unsqueeze(0).to(DEVICE)  # preprocess image and text inputs
-
+    image = vis_processors["eval"](raw_image).unsqueeze(0).to(DEVICE)
+    # 2. generate captions
     # common_capture = MODEL.generate({"image": image})  # generate caption using beam search  # FIXME remove it
-
     # due to the non-determinstic nature of necleus sampling, you may get different captions.
     return MODEL.generate({"image": image}, use_nucleus_sampling=True, num_captions=3)
 
 
 def frames_to_captions(frames_path: str, output_file_path: str):
     """Process all frames from folder and save it in output file."""
+    open(output_file_path, "w").close()  # erase the file contents
     file_names = (f for f in os.listdir(frames_path) if os.path.isfile(os.path.join(frames_path, f)))
 
     for start, file_name in enumerate(file_names):
