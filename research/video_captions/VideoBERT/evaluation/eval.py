@@ -40,7 +40,7 @@ def set_seed(args):
 
 def evaluate(args, model, eval_dataset: VideoBertDataset):
     """ Evaluate the model """
-
+    
     # Calculates the batch size for training given number of gpus and batch size for gpus
 
     pad_id = eval_dataset.tokenizer.vocab.stoi[eval_dataset.tokenizer.pad_token]
@@ -99,7 +99,7 @@ def evaluate(args, model, eval_dataset: VideoBertDataset):
     set_seed(args)  # Added here for reproducibility
     model.eval()
     eval_iterator = tqdm(eval_dataloader, desc="Iteration")
-
+    # print("eval_iterator", eval_iterator, len(eval_iterator))
     for step, \
         [text_ids,
          text_type_ids,
@@ -110,11 +110,13 @@ def evaluate(args, model, eval_dataset: VideoBertDataset):
          joint_ids,
          joint_type_ids,
          joint_attn_mask] in enumerate(eval_iterator):
-
+        
         torch.cuda.empty_cache()
-
-        if text_ids.shape[1] >= 100 or video_ids.shape[1] >= 100 or joint_ids.shape[1] >= 100:
-            continue
+#         print("STEP:", step)
+#         print("SHAPES")
+#         print(text_ids.shape, video_ids.shape, joint_ids.shape)
+#         if text_ids.shape[1] >= 100 or video_ids.shape[1] >= 100 or joint_ids.shape[1] >= 100:
+#             continue
 
         with torch.no_grad():
             outputs = model(

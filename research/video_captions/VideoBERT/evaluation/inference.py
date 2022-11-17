@@ -110,7 +110,7 @@ def main(colab_args=None):
 
     # setup tokenizer and model
     tokenizer = torch.load(os.path.join(args.output_dir, "tokenizer.pt"))
-    eval_dataset = VideoBertDataset(tokenizer, build_tokenizer=False, data_path='eval_data.json')
+    eval_dataset = VideoBertDataset(tokenizer, build_tokenizer=False, data_path='./data/eval/eval_data.json')
     data_globals.config.vocab_size = len(tokenizer.vocab.itos) + 20736
     print("total vocab size of", len(tokenizer.vocab.itos) + 20736)
 
@@ -123,8 +123,8 @@ def main(colab_args=None):
     for i in tqdm(range(args.example_id, args.example_id+10000, 100)):
         try:
             out_vid_tokens = video_next_tok_pred(args, model, tokenizer, eval_dataset[i][3])
-
-            centroid_map = json.load(open('centroid_to_img.json', 'r'))
+            # TODO Move to parameters
+            centroid_map = json.load(open('./data/images_dict/images_dict.json', 'r'))
             centroid_imgs = np.concatenate([cv2.imread(centroid_map[str(centroid-len(tokenizer.vocab))]) for centroid in out_vid_tokens[1:-1]][:5], axis=0)
             cv2.imwrite('gen_vids/out-vid-{}.jpg'.format(i), centroid_imgs)
         except Exception as e:
