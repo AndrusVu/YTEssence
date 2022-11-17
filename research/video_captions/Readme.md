@@ -110,6 +110,7 @@ python ./VideoBERT/data/label_data.py `
 
 ### Punctuate data
 
+```
 $CAPTIONS_PATH = "./data/captions/captions.json"
 $PUNCTUATOR_MODEL = "./data/punctuator_model/Demo-Europarl-EN.pcl"
 $LABELLED_DATA = "./data/labelled_data/labelled_data.json"
@@ -122,9 +123,11 @@ python VideoBERT/data/punctuate_text.py `
 -l $LABELLED_DATA `
 -f $ROOT_FEATURES `
 -s $SAVE_PATH
+```
 
 ### Training
 
+```
 $OUTPUT_DIR = "./data/pred_checkpoints"
 $TRAIN_DATA_PATH = "./data/train/train.json"
 $EVAL_DATA_PATH = "./data/train/train.json"
@@ -159,9 +162,11 @@ python -m VideoBERT.train.train `
 --save_steps $SAVE_STEPS `
 --save_total_limit $SAVE_TOTAL_LIMIT `
 --seed $SEED
+```
 
 ### Run inference
 
+```
 $MODEL_NAME_OR_PATH = "./data/pred_checkpoints"
 $OUTPUT_DIR = "./data/pred_checkpoints"
 $EXAMPLE_ID = 0
@@ -172,6 +177,7 @@ python -m VideoBERT.evaluation.inference `
 --output_dir $OUTPUT_DIR `
 --example_id $EXAMPLE_ID `
 --seed $SEED
+```
 
 ___
 WIP
