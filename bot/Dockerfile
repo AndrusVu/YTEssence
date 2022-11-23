@@ -22,4 +22,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /usr/src/app
 
 ADD . .
+# install TG-bot libraries
 RUN pip3 install --no-cache-dir --upgrade -r ./requirements.txt
+
+# install Models libraries
+RUN pip3 install -e ./models/LAVIS/.
+RUN pip3 install --no-cache-dir --upgrade -r ./models/LAVIS/requirements-wip.txt
